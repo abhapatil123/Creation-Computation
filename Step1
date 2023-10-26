@@ -11,7 +11,7 @@ function setup() {
 }
 
 function draw() {
-  background(255);
+  background(255,20);
   fill(0);
   
   // Adjust the circle's position based on device tilt
@@ -23,8 +23,8 @@ function draw() {
   circleY = map(tiltY, -45, 45, 0, height);
   
   // Constrain the circle's position within the canvas boundaries
-  circleX = constrain(circleX, 0, width-40);
-  circleY = constrain(circleY, 0, height-40);
+  circleX = constrain(circleX, 40, width-40);
+  circleY = constrain(circleY, 40, height-40);
   
   circle(circleX, circleY, 80);
 }
