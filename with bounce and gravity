@@ -1,0 +1,43 @@
+let circleX, circleY;
+let circleSize = 80;
+let velocityX = 0;
+let acceleration = 0.1; // Acceleration due to gravity
+let friction = 0.98; // Friction to simulate rolling
+let bounceFactor = -0.7; // Bounce factor (negative value for bouncing)
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  circleX = width / 2;
+  circleY = height / 2;
+}
+
+function draw() {
+  background(255,20);
+
+  // Adjust the circle's position based on device tilt
+  const tiltX = rotationY; // Use rotationY for left/right tilt
+  const tiltY = rotationX; // Use rotationX for up/down tilt
+  circleX += tiltX * 0.5; // Adjust position based on tilt
+  circleY += tiltY * 0.5;
+
+  // Update the circle's position and velocity based on gravity and friction
+  velocityX += acceleration;
+  circleX += velocityX;
+
+  // Apply friction to simulate rolling
+  velocityX *= friction;
+
+  // Check for collisions with canvas boundaries
+  if (circleX - circleSize / 2 < 0 || circleX + circleSize / 2 > width) {
+    velocityX *= bounceFactor; // Apply bounce when hitting horizontal borders
+  }
+
+  if (circleY + circleSize / 2 > height) {
+    circleY = height - circleSize / 2; // Prevent the ball from going below the bottom
+    velocityX *= friction; // Apply friction when hitting the bottom
+  }
+
+  // Draw the circle
+  fill(0);
+  circle(circleX, circleY, circleSize);
+}
