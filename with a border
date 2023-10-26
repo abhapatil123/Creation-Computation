@@ -1,0 +1,64 @@
+let circleX, circleY;
+let circleSize = 80;
+let velocityX = 0;
+let velocityY = 0;
+let acceleration = 0.1; // Acceleration due to gravity
+let friction = 0.97; // Friction to simulate rolling (reduce it slightly)
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  circleX = width / 2;
+  circleY = height / 2;
+}
+
+function draw() {
+  background(255, 20);
+
+  // Adjust the circle's position based on device tilt
+  const tiltX = rotationY; // Use rotationY for left/right tilt
+  const tiltY = rotationX; // Use rotationX for up/down tilt
+  circleX += tiltX * 0.5; // Adjust position based on tilt
+  circleY += tiltY * 0.5;
+
+  // Update the circle's position and velocity based on gravity and friction
+  velocityX += acceleration;
+  velocityY += acceleration;
+  circleX += velocityX;
+  circleY += velocityY;
+
+  // Apply friction to simulate rolling
+  velocityX *= friction;
+  velocityY *= friction;
+
+  // Constrain the circle's position to the canvas boundaries with an opening
+  circleX = constrain(circleX, circleSize / 2, width - circleSize / 2);
+  circleY = constrain(circleY, circleSize / 2, height - circleSize / 2);
+
+  // Check for collisions with canvas boundaries and apply bounce
+  if (circleX - circleSize / 2 < 0 || circleX + circleSize / 2 > width) {
+    velocityX *= -1; // Reverse the horizontal velocity
+  }
+
+  if (circleY - circleSize / 2 < 0) {
+    velocityY *= -1; // Reverse the vertical velocity at the top
+  } else if (circleY + circleSize / 2 > height) {
+    // Allow the ball to slip out at the bottom
+    circleY = height - circleSize / 2;
+  }
+
+  // Draw the circle
+  fill(0);
+  circle(circleX, circleY, circleSize);
+  
+  // Draw the border
+  strokeWeight(10);
+  line(0,0,0, height);
+  line(0,0,width,0);
+  line(width,0,width,height);
+  line(0,height,120,height);
+  line(230,height,width,height);
+  strokeWeight(5);
+  line(225,height-30,225,height);
+  line(125,height-30,125,height);
+}
+
