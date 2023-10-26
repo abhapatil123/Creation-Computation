@@ -22,8 +22,8 @@ function draw() {
   velocityX *= friction;
 
   // Constrain the circle's position within the canvas boundaries
-  circleX = constrain(circleX, circleSize / 2, width - circleSize / 2);
-  circleY = height - circleSize / 2; // Keep the circle at the bottom
+  circleX = constrain(circleX, 0, width-40);
+  circleY = constrain(circleY, 0, height-40);
 
   background(255, 10); // Set the background with low opacity to create a fading effect
   circle(circleX, circleY, circleSize);
