@@ -12,7 +12,7 @@ function setup() {
 }
 
 function draw() {
-  background(255,20);
+  background(255, 20);
 
   // Adjust the circle's position based on device tilt
   const tiltX = rotationY; // Use rotationY for left/right tilt
@@ -26,6 +26,10 @@ function draw() {
 
   // Apply friction to simulate rolling
   velocityX *= friction;
+
+  // Constrain the circle's position to the canvas boundaries
+  circleX = constrain(circleX, circleSize / 2, width - circleSize / 2);
+  circleY = constrain(circleY, circleSize / 2, height - circleSize / 2);
 
   // Check for collisions with canvas boundaries
   if (circleX - circleSize / 2 < 0 || circleX + circleSize / 2 > width) {
